@@ -1,13 +1,13 @@
 import pandas as pd
 import numpy as np
 
-transaction=pd.read_csv("указать_путь/transactions.csv", 
+transaction=pd.read_csv("transactions.csv", 
             index_col='customer_id', 
             nrows=1000000)
-tr_types = pd.read_csv("указать_путь/tr_types.csv",
+tr_types = pd.read_csv("tr_types.csv",
             sep = ';',
            index_col='tr_type')
-
+#определяем топ-5 транзакций по частоте встречаемости
 counted_df = transaction.groupby('tr_type').agg({'tr_datetime':'count'}).rename(columns=
                                                                                 {'tr_datetime':'tr_count'})
 
@@ -61,7 +61,7 @@ import dataframe_image as dfi
 df_styled = pop_image.style.background_gradient()
 dfi.export(df_styled,"tr_table.png")
 
-#представление необходимых результатов в виде таблицы
+#альтернативная визуализация в виде таблицы
 for lab, row in count.iterrows():
     count.loc[lab, 'tr_part'] = row['tr_count']/count['tr_count'].sum()
 
