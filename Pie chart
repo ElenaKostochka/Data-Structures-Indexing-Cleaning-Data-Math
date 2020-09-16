@@ -1,61 +1,73 @@
 import pandas as pd
 import numpy as np
-#загружаем необходимы для подсчетов файлы transactions.csv и tr_types.csv
+
 transaction=pd.read_csv("указать_путь/transactions.csv", 
             index_col='customer_id', 
             nrows=1000000)
 tr_types = pd.read_csv("указать_путь/tr_types.csv",
             sep = ';',
            index_col='tr_type')
-#подсчитаем количество значений tr_type, количество значений будет отражаеться в столбце 'tr_count'
+
 counted_df = transaction.groupby('tr_type').agg({'tr_datetime':'count'}).rename(columns=
                                                                                 {'tr_datetime':'tr_count'})
 
-#соединяет верхнею таблицу с tr_type, чтобы увидеть расшифровку кодов транзакций. Сортируем от наибольшего к наименьшему
+
 count=counted_df.merge(tr_types, on='tr_type', how='left').sort_values('tr_count',ascending=False)
-#чтобы увидеть полностью описание транзакции применяем отображение в виде HTML таблицы
-from IPython.display import display, HTML
-display(HTML(count.to_html()))
-#проверяем итоговое количество транзакций, должно быть 1 000 000
-count['tr_count'].sum()
-#отразим долю первых 5 самых популярных транзакций в виде круговой диаграммы
+
+
+
+
+#строим круговую диаграмму для 5 топ-5 транзакций по частоте встречаемости
 pop_trans=count[:5]
-#считаем общее количество транзакций
 sum_tr = count['tr_count'].sum()
-#считаем общее количество транзакций в первой пятерке
 sum_pop = pop_trans['tr_count'].sum()
-#создаем список с кодами самых популярных 5 транзакций с типом строка, добавляем в список "прочее"
+
 pop_code=[]
 for i in pop_trans.index:
     pop_code.append(str(i))
 pop_code.append('прочее')
-#создаем список с долями поп-5 транзакций и считаем долю для прочего
+
 tr_part=[]
 for s in pop_trans["tr_count"]:
     k=s/sum_tr
     tr_part.append(k.round(2)) 
 for_other = (sum_tr-sum_pop)/sum_tr
 tr_part.append(for_other.round(2))
-#строим круговую диаграмму, с отделенным сектором "прочее" от общий диаграммы, использую библиотеку matplotlib
-import matplotlib.pyplot as plt
-explode = (0, 0, 0, 0, 0, 0.1)
-fig1, ax1 = plt.subplots()
-ax1.pie(tr_part, labels = pop_code, autopct='%1.1f%%', startangle=90, explode=explode, shadow=True)
-ax1.axis('equal')
 
+import matplotlib.pyplot as plt
+explode = (0, 0, 0, 0, 0., 0.1)
+plt.axis("equal")
+plt.pie(tr_part, labels = pop_code, autopct='%1.0f%%', startangle=90, explode=explode, shadow=True)
+plt.title("Топ 5 транзакций по частоте встречаемости")
+plt.savefig('top_transactions1.png', pad_inches="tight")
 plt.show()
 
 
 
 # для подсчета и объединения таблиц можно использовать альтернативный способ
-#считаем количество значений по столбцу 'tr_type', в итоге получаем объект Series
 trans = transaction['tr_type'].value_counts(sort=True)
-#Создаем DataFrame, для дальнейшего использования метода merge
 trans1=pd.DataFrame(data=trans.values, 
                     index=trans.index,
                    columns=["tr_count"])
-#объединяем по левому DataFrame trans1 с tr_types по индексам
 trans1_count=trans1.merge(tr_types,
              left_index=True,
              right_index=True,
              how='left')
+
+
+#дополнительно сохраняем таблицы для их вставки, например в презентацию. Использую dataframe_image
+import dataframe_image as dfi
+# таблица доп к диаграмме
+df_styled = pop_image.style.background_gradient()
+dfi.export(df_styled,"tr_table.png")
+
+#представление необходимых результатов в виде таблицы
+for lab, row in count.iterrows():
+    count.loc[lab, 'tr_part'] = row['tr_count']/count['tr_count'].sum()
+
+
+count_table=count[['tr_part', 'tr_description']].head()
+import dataframe_image as dfi
+
+df_styled = count_table.style.background_gradient()
+dfi.export(df_styled,"table_f.png")
