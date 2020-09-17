@@ -17,7 +17,7 @@ count=counted_df.merge(tr_types, on='tr_type', how='left').sort_values('tr_count
 
 
 
-#строим круговую диаграмму для 5 топ-5 транзакций по частоте встречаемости
+#строим круговую диаграмму для топ-5 транзакций по частоте встречаемости
 pop_trans=count[:5]
 sum_tr = count['tr_count'].sum()
 sum_pop = pop_trans['tr_count'].sum()
