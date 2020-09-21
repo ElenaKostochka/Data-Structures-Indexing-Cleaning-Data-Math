@@ -71,3 +71,12 @@ import dataframe_image as dfi
 
 df_styled = count_table.style.background_gradient()
 dfi.export(df_styled,"table_f.png")
+
+#визуализация в виде столбцовой диаграммы средствами seaborn
+for_seaborn=count[:5]
+import matplotlib.pyplot as plt
+import seaborn as sns
+sns.barplot(y='tr_description', x='tr_count', data=for_seaborn)
+plt.title("Топ 5 транзакций по частоте встречаемости")
+plt.savefig('top_transactions12.jpg', bbox_inches='tight')
+plt.show()
