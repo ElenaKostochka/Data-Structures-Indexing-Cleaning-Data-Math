@@ -1,5 +1,6 @@
 # Data-Structures-Indexing-Cleaning-Data-Math
-Data for identifying the top 5 transactions and data visualization is taken from open sources. 
+"identifying the top 5 transactions and data visualization" demostrate data manipulation and data visualization using pandas, NumPy, matplotlib, and seaborn. Simple and fast option.
+The data are taken from open sources. 
 You can download it: https://drive.google.com/file/d/1Ca3oa1msJCfIeb1Ahfgjc4-WCl_FUdKo/view?usp=sharing
 Task: determine the top 5 popular transactions by frequency of occurrence and visualize the results.
 The presentation contains three visualization options: in the form of a pie chart with a table of code decoding,  in the form of a summary table with shares for each type of transaction and a bar chart.
@@ -8,7 +9,8 @@ The presentation contains three visualization options: in the form of a pie char
 "np.random" and "pandas Series" contain examples of solving typical tasks. 
 
 
-Данные для identifying the top 5 transactions and data visualization взяты из открытых источников
+"identifying the top 5 transactions and data visualization" показывают как можно просто и быстро извлечь и визуализировать данные, используя pandas, NumPy, matplotlib, и seaborn.
+Сами данные по транзакциям взяты из открытых источников.
 Загрузка https://drive.google.com/file/d/1Ca3oa1msJCfIeb1Ahfgjc4-WCl_FUdKo/view?usp=sharing
 Задача: определить топ-5 популярных транзакций по частоте встречаемости и визуализировать полученные данные. 
 В презентации представлены три варианта визуализации: в виде круговой диаграммы с таблицей расшифровкой кодов, и в виде сводной таблицы с долями для каждого типа транзакций и столбчатой диаграммы.
