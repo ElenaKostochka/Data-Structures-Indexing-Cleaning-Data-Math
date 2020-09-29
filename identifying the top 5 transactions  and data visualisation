@@ -1,32 +1,32 @@
 import pandas as pd
 import numpy as np
 
-transaction=pd.read_csv("transactions.csv", 
+transactions=pd.read_csv("transactions.csv", 
             index_col='customer_id', 
             nrows=1000000)
 tr_types = pd.read_csv("tr_types.csv",
             sep = ';',
            index_col='tr_type')
-#определяем топ-5 транзакций по частоте встречаемости
-counted_df = transaction.groupby('tr_type').agg({'tr_datetime':'count'}).rename(columns=
+           
+#Считает количество транзакций по типу в таблице transations и соединяет с таблицей tr_types
+counted_df = transactions.groupby('tr_type').agg({'tr_datetime':'count'}).rename(columns=
                                                                                 {'tr_datetime':'tr_count'})
-
 
 count=counted_df.merge(tr_types, on='tr_type', how='left').sort_values('tr_count',ascending=False)
 
 
-
-
-#строим круговую диаграмму для топ-5 транзакций по частоте встречаемости
+#расчеты для создания круговой диаграммы
 pop_trans=count[:5]
 sum_tr = count['tr_count'].sum()
 sum_pop = pop_trans['tr_count'].sum()
 
+#список транзакций, для подписи круговой диаграммы
 pop_code=[]
 for i in pop_trans.index:
     pop_code.append(str(i))
 pop_code.append('прочее')
 
+#считает долю для каждого типа транзакции
 tr_part=[]
 for s in pop_trans["tr_count"]:
     k=s/sum_tr
@@ -34,6 +34,7 @@ for s in pop_trans["tr_count"]:
 for_other = (sum_tr-sum_pop)/sum_tr
 tr_part.append(for_other.round(2))
 
+#создает круговую диаграмму
 import matplotlib.pyplot as plt
 explode = (0, 0, 0, 0, 0., 0.1)
 plt.axis("equal")
@@ -42,20 +43,7 @@ plt.title("Топ 5 транзакций по частоте встречаем�
 plt.savefig('top_transactions1.png', pad_inches="tight")
 plt.show()
 
-
-
-# для подсчета и объединения таблиц можно использовать альтернативный способ
-trans = transaction['tr_type'].value_counts(sort=True)
-trans1=pd.DataFrame(data=trans.values, 
-                    index=trans.index,
-                   columns=["tr_count"])
-trans1_count=trans1.merge(tr_types,
-             left_index=True,
-             right_index=True,
-             how='left')
-
-
-#дополнительно сохраняем таблицы для их вставки, например в презентацию. Использую dataframe_image
+#дополнительно сохраняет таблицы для их вставки, например в презентацию. Использую dataframe_image
 import dataframe_image as dfi
 # таблица доп к диаграмме
 df_styled = pop_image.style.background_gradient()
@@ -65,14 +53,13 @@ dfi.export(df_styled,"tr_table.png")
 for lab, row in count.iterrows():
     count.loc[lab, 'tr_part'] = row['tr_count']/count['tr_count'].sum()
 
-
 count_table=count[['tr_part', 'tr_description']].head()
-import dataframe_image as dfi
 
+import dataframe_image as dfi
 df_styled = count_table.style.background_gradient()
 dfi.export(df_styled,"table_f.png")
 
-#визуализация в виде столбцовой диаграммы средствами seaborn
+#визуализация в виде столбчатой диаграммы средствами seaborn
 for_seaborn=count[:5]
 import matplotlib.pyplot as plt
 import seaborn as sns
