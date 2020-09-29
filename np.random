@@ -1,11 +1,14 @@
 import pandas as pd
 import numpy as np
 np.random.seed(242)
-#генерируем объект Series из 100 значений, возводим значение в 3 степень и увеличиваем индекс в 3 раза
+
+#генерирую объект Series из 100 значений, возвожу значение в 3 степень и увеличиваю индекс в 3 раза
 s = pd.Series(np.random.normal(size=100)**3, index=[x * 3 for x in range(100)])
+
 #считает сумму строго меньших 2.6, имеющих нечетные значения
 s_sum=s[(x % 2 != 0 for x in s.index) and (s < 2.6)].sum()
 print('1', s_sum.round(3))
+
 #считает количество значений меньших 0 
 s_count=s[s < 0].count()
 print('2', s_count)
