@@ -1,5 +1,5 @@
 # Data-Structures-Indexing-Cleaning-Data-Math
-"identifying the top 5 transactions and data visualization" demostrate data manipulation and data visualization using pandas, NumPy, matplotlib, and seaborn. Simple and fast option.
+"identifying the top 5 transactions and data visualization" demonstrate data manipulation and data visualization using pandas, NumPy, matplotlib, and seaborn. Simple and fast option.
 The data are taken from open sources. 
 You can download it: https://drive.google.com/file/d/1Ca3oa1msJCfIeb1Ahfgjc4-WCl_FUdKo/view?usp=sharing
 Task: determine the top 5 popular transactions by frequency of occurrence and visualize the results.
