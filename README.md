@@ -4,7 +4,7 @@ The data are taken from open sources.
 You can download it: https://drive.google.com/file/d/1Ca3oa1msJCfIeb1Ahfgjc4-WCl_FUdKo/view?usp=sharing
 Task: determine the top 5 popular transactions by frequency of occurrence and visualize the results.
 The presentation contains three visualization options: in the form of a pie chart with a table of code decoding,  in the form of a summary table with shares for each type of transaction and a bar chart.
-"transactions.csv" contains information about more than 6 million transactions. the calculation is based on a sample of 1 million transactions.
+"transactions.csv" contains information about more than 6 million transactions. The calculation is based on a sample of 1 million transactions.
 "tr_types.csv" contains a description of the transaction by code.
 "np.random" and "pandas Series" contain examples of solving typical tasks. 
 
